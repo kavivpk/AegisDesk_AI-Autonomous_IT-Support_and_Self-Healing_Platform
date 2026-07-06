@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { getStats } = require('../controllers/analyticsController');
-const { protect, authorize } = require('../middleware/auth');
+const { protect } = require('../middleware/auth');
 
-router.get('/stats', protect, authorize('admin', 'it_engineer'), getStats);
+router.get('/stats', protect, getStats);
 
 module.exports = router;
