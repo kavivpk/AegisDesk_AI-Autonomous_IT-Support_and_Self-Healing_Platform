@@ -61,22 +61,9 @@ const ticketSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  resolvedAt: {
-    type: Date
-  },
-  escalatedAt: {
-    type: Date
-  }
+  resolvedAt: { type: Date },
+  escalatedAt: { type: Date }
 }, { timestamps: true });
-
-// Auto generate ticketId
-ticketSchema.pre('save', async function(next) {
-  if (!this.ticketId) {
-    const count = await mongoose.model('Ticket').countDocuments();
-    this.ticketId = `TKT-${String(count + 1).padStart(5, '0')}`;
-  }
-  next();
-});
 
 // Indexes
 ticketSchema.index({ status: 1 });
