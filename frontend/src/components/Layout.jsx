@@ -4,11 +4,11 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 
 const navItems = [
-  { path: '/dashboard', icon: '📊', label: 'Dashboard' },
-  { path: '/tickets', icon: '🎫', label: 'Tickets' },
-  { path: '/create-ticket', icon: '➕', label: 'Create Ticket' },
-  { path: '/knowledge', icon: '📚', label: 'Knowledge Base' },
-  { path: '/analytics', icon: '📈', label: 'Analytics' },
+  { path: '/dashboard', icon: '📊', label: 'Dashboard', roles: ['employee', 'it_engineer', 'admin'] },
+  { path: '/tickets', icon: '🎫', label: 'Tickets', roles: ['employee', 'it_engineer', 'admin'] },
+  { path: '/create-ticket', icon: '➕', label: 'Create Ticket', roles: ['employee', 'it_engineer', 'admin'] },
+  { path: '/knowledge', icon: '📚', label: 'Knowledge Base', roles: ['it_engineer', 'admin'] },
+  { path: '/analytics', icon: '📈', label: 'Analytics', roles: ['it_engineer', 'admin'] },
 ];
 
 const adminItems = [
@@ -48,14 +48,17 @@ export default function Layout({ children }) {
 
         {/* Nav */}
         <nav className="flex-1 p-2 space-y-1 overflow-y-auto">
-          {navItems.map(item => (
-            <Link key={item.path} to={item.path}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-sm font-medium
-                ${location.pathname === item.path ? activeNav : inactiveNav}`}>
-              <span>{item.icon}</span>
-              {!collapsed && <span>{item.label}</span>}
-            </Link>
-          ))}
+          {navItems
+  .filter(item => item.roles.includes(user?.role))
+  .map(item => (
+    <Link key={item.path} to={item.path}
+      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-sm font-medium
+        ${location.pathname === item.path ? activeNav : inactiveNav}`}>
+      <span>{item.icon}</span>
+      {!collapsed && <span>{item.label}</span>}
+    </Link>
+  ))
+}
 
           {user?.role === 'admin' && (
             <>
