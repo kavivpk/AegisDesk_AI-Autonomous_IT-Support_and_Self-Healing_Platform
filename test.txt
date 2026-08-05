@@ -1,0 +1,7 @@
+WiFi Troubleshooting Guide
+If laptop shows connected but no internet:
+1. Restart the router
+2. Forget and reconnect WiFi
+3. Run network troubleshooter
+4. Update network drivers
+5. Reset TCP/IP stack
